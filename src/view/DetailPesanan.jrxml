@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f319cae6-42d9-43d1-ba1b-e595afa359d0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     jenis_produk.`jenis_produk` AS jenis_produk,
+     det_pemesanan.`jml_harga` AS jml_harga,
+     det_pemesanan.`tgl_pakai` AS tgl_pakai,
+     det_pemesanan.`tgl_pasang` AS tgl_pasang,
+     det_pemesanan.`tgl_bongkar` AS tgl_bongkar,
+     macam_produk.`nama_macam_produk` AS nama_macam_produk
+FROM
+     `det_pemesanan` det_pemesanan INNER JOIN `macam_produk` macam_produk ON det_pemesanan.`id_macam_produk` = macam_produk.`id_macam_produk`
+     INNER JOIN `jenis_produk` jenis_produk ON macam_produk.`id_jenis_produk` = jenis_produk.`id_jenis_produk`
+WHERE
+     det_pemesanan.`tgl_pakai` != 0]]>
+	</queryString>
+	<field name="jenis_produk" class="java.lang.String"/>
+	<field name="jml_harga" class="java.lang.Integer"/>
+	<field name="tgl_pakai" class="java.sql.Date"/>
+	<field name="tgl_pasang" class="java.sql.Date"/>
+	<field name="tgl_bongkar" class="java.sql.Date"/>
+	<field name="nama_macam_produk" class="java.lang.String"/>
+	<group name="nama_konsumen">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<line>
+					<reportElement uuid="d13d61bc-1720-428e-9ac6-35a4f6c0da0d" x="-20" y="32" width="595" height="1" forecolor="#666666"/>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="a1b7c0ae-04d9-414f-a88b-497019f20a1d" x="322" y="0" width="122" height="20"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tgl_bongkar}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="fb39e724-94a0-44ee-a0a2-b9bf183785c5" x="100" y="0" width="84" height="20"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jml_harga}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="01b1d8ac-d777-445f-b8a3-99c624003d85" x="0" y="0" width="100" height="20"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jenis_produk}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1c7fbb3a-0c81-4a06-ae03-a80b7b7806e1" x="253" y="0" width="69" height="20"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tgl_pasang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="7a5846e3-f110-4819-b769-e5632415c1c9" x="184" y="0" width="69" height="20"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tgl_pakai}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="353037b3-bcea-4ea3-8c9e-ab314ee99ced" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="39be8891-a32c-41fc-b596-0d8540a560c1" x="20" y="20" width="234" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Esagama]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7b4010b1-9006-40af-aae4-7dc71b9200f2" x="395" y="43" width="180" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Detail pemesanan]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="a899afbd-2f14-440e-ba9d-40390551d0ba" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cfad0b8f-77b9-4d2e-938a-c12968745a97" mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[jenis_produk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01ec84e1-92a5-4647-85fe-ae2626a49fdf" mode="Opaque" x="100" y="0" width="84" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[jml_harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="db8e2237-196b-4c46-a382-d1a1ae8f4522" mode="Opaque" x="184" y="0" width="69" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[tgl_pakai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c626086-5b30-4d9d-a9e1-a78001a08858" mode="Opaque" x="253" y="0" width="85" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[tgl_pasang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71f91909-6aff-420c-a9b7-3669a964bdd8" mode="Opaque" x="338" y="0" width="106" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[tgl_bongkar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="0719a081-c093-47c6-9377-73c7699a54ff" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="10a540c1-f096-476b-8b8b-c07d58422919" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="172855be-4312-4ca4-a96d-ebdc425fd258" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="8fbe6a08-3750-4532-808e-f0607197e737" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
