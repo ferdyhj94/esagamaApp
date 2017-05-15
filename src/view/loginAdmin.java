@@ -7,10 +7,12 @@ package view;
 
 import Entity.EntLogin;
 import Factory.Factory;
+import Implement.Koneksi;
 import Interface.IntLogin;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-
+import javax.sql.*;
+import java.sql.*;
 /**
  *
  * @author Ferdy
@@ -18,7 +20,9 @@ import javax.swing.JOptionPane;
 public class loginAdmin extends javax.swing.JFrame {
 private boolean condition;
 private IntLogin loginDao;
-private EntLogin login;
+private EntLogin admin;
+private Connection koneksi;
+private Koneksi db = new Koneksi();
     /**
      * Creates new form loginAdmin
      */
@@ -42,10 +46,10 @@ private EntLogin login;
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtusername = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         Login = new javax.swing.JButton();
         Close = new javax.swing.JButton();
-        txtpassword = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +74,11 @@ private EntLogin login;
         });
 
         Close.setText("Tutup");
+        Close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,8 +105,8 @@ private EntLogin login;
                             .addComponent(jLabel5))
                         .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtusername)
-                            .addComponent(txtpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
+                            .addComponent(txtUsername)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(190, 190, 190)
                         .addComponent(Close)
@@ -117,11 +126,11 @@ private EntLogin login;
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Login)
@@ -145,19 +154,45 @@ private EntLogin login;
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:      
-        condition = loginDao.login(txtusername.getText(),txtpassword.getText());
-        if(condition){
-            JOptionPane.showMessageDialog(null,"login sukses");
-//            Dashboard dashboard = new Dashboard();
-//            dashboard.setVisible(true);
-//            setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null,"login fail");
-            txtusername.setText("");
-            txtpassword.setText("");
-            txtusername.requestFocus();
+//        condition = loginDao.login(txtUsername.getText(),txtPassword.getText());
+//        if(condition){
+//            JOptionPane.showMessageDialog(null,"login sukses");
+////            Dashboard dashboard = new Dashboard();
+////            dashboard.setVisible(true);
+////            setVisible(false);
+//        }else{
+//            JOptionPane.showMessageDialog(null,"login fail");
+//            txtUsername.setText("");
+//            txtPassword.setText("");
+//            txtUsername.requestFocus();
+//        }        db.koneksiDatabase();
+        try {
+            String sql = "SELECT * FROM admin WHERE username = '" + txtUsername.getText() + "' AND password = '" + txtPassword.getText() + "'";
+            Statement st = db.getKoneksi().createStatement();
+            ResultSet rsLogin = st.executeQuery(sql);
+ 
+            rsLogin.next();
+            rsLogin.last(); //mengecek jumlah baris pada hasil query
+            if (rsLogin.getRow()==1){
+                JOptionPane.showMessageDialog(null, "Login Berhasil!");
+                new Dashboard().setVisible(true); //<-- BILA MAU DIARAHKAN KE Frame Menu Utama
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Maaf, Username / Password salah!");
+                txtPassword.setText("");
+                txtPassword.requestFocus();
+            }
+        } catch (SQLException e) {
         }
+        
     }//GEN-LAST:event_LoginActionPerformed
+
+    private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
+        // TODO add your handling code here:
+//        if(JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin keluar dari aplikasi ini? ","konfirmasi",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+//            System.exit(0);
+//        }
+    }//GEN-LAST:event_CloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +238,7 @@ private EntLogin login;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField txtpassword;
-    private javax.swing.JTextField txtusername;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
